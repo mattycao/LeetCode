@@ -11,8 +11,8 @@ public class Solution {
         if(points.length < 3) {
             return points.length;
         }
-        Map<Double, Integer> map = new HashMap<Double, Integer>();
-        int result = 0; 
+        int result = 0;
+        Map<Double, Integer> map = new HashMap<Double, Integer>(); 
         for(int i = 0; i < (points.length -1); ++i) {
             map.clear();
             int sameNum = 0;
@@ -22,13 +22,13 @@ public class Solution {
                 if(points[i].x == points[j].x) {
                     // add the slope infinite
                    //map.put((double)Integer.MAX_VALUE, 2);
-                    slope = (double)Integer.MAX_VALUE;
+                    slope = Double.MAX_VALUE;
                    if(points[i].y == points[j].y) {
-                       sameNum++;
+                       ++sameNum;
                        continue;
                    }
                 } else {
-                    slope = 1.0 * ((points[i].y - points[j].y)/(points[i].x - points[j].x));
+                    slope = ((double)(points[i].y - points[j].y)/(points[i].x - points[j].x)) + 0.0;
                 }
                 int count = 0;
                 if(map.containsKey(slope)) {
@@ -38,9 +38,11 @@ public class Solution {
                     count = 2;
                     map.put(slope, count);
                 }
-                point_Max = (point_Max < count)? count : point_Max;
+                if(point_Max < count) 
+                    point_Max = count;
             }
-            result = (result < point_Max + sameNum)? point_Max + sameNum : result;
+            //result = (result < point_Max + sameNum)? point_Max + sameNum : result;
+            if(result < point_Max + sameNum) result = point_Max + sameNum;
         }
         return result;
     }
